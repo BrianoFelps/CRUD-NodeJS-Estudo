@@ -28,3 +28,33 @@ model clients {
   email String?
   password String
 }
+
+/*
+
+➡️ Quando você roda:
+
+npx prisma generate
+
+
+O Prisma cria um client com base nesse schema.
+No exemplo acima, ele gera prisma.pages, que se conecta exatamente à tabela pages do banco.
+
+🔎 2. E se a tabela não existir ainda?
+
+Aí você precisa criar a tabela no banco. O Prisma não cria sozinho, mas oferece ferramentas para isso:
+
+Você define o model no schema.prisma.
+
+Depois roda:
+
+npx prisma migrate dev --name init
+
+🔎 4. Resumindo
+
+O Prisma mapeia models do schema.prisma para tabelas do banco.
+
+Se a tabela ainda não existe → você cria com prisma migrate dev.
+
+Se o banco já existe → você pode usar prisma db pull para sincronizar seu schema com o banco existente.
+
+*/
