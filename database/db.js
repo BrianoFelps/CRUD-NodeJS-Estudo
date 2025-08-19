@@ -1,23 +1,9 @@
-import Pool from 'pg'
-import dotenv from 'dotenv';
+import PrismaClient from '@prisma/client';
 
-dotenv.config();
+const prisma = new PrismaClient();
 
-export const db = db.createConnection({
-    host: process.env.db_HOST,
-    port: process.env.db_PORT,
-    user: process.env.db_USER,
-    password: process.env.db_ROOT_PASSWORD,
-    database: process.env.db_DATABASE
-})
+prisma.$connect()
+    .then(()=> console.log("Conectado ao PostgreSQL via Prisma"))
+    .catch(err => console.error("Erro ao conectar ao banco >>>>>>>", err))
 
-db.connect((err) => {
-    if(err) {
-        return console.error(`Erro ao se conectar ao banco de dados (${process.env.db_DATABASE}): ${err}`);
-    }
-    
-    if(process.env.db_HOST === 'localhost') console.log(`Usando servidor local`);
-    return console.log(`Conexão bem-sucedida ao banco de dados db (${process.env.db_DATABASE})`);
-})
-
-export default db;
+export default prisma;
