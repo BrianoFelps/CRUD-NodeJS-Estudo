@@ -1,11 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import products from './routes/products'
+import router from './routes/products.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use("/", products);
+app.use("/", router);
 
 export default app;
+
+//App separado da inicialização do servidor para otimizar testes posteriormente

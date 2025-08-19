@@ -21,3 +21,10 @@ model products {
   price Float
   imagesUrl String[]
 }
+
+model clients {
+  id Int @id @default(autoincrement())
+  name String 
+  email String?
+  password String
+}
