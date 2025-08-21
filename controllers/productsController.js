@@ -35,13 +35,14 @@ const products = [
     nome: "PC Gamer de entrada",
     descricao: "...",
     preco: 2099.99,
-
+    categoria: "Computadores"
     },
     {
     id: 4, 
     nome: "PC Gamer",
     descricao: "...",
     preco: 5099.99,
+    categoria: "Computadores"
     }
 ];
 
@@ -50,6 +51,15 @@ export const getProducts = (_, res) => {
     try{
         return res.status(200).json(products);
     } catch (err){
-        return res.status(500).json("Erro ao obter os produtos");
+        return res.status(500).json(`Erro ao obter os produtos: ${err}`);
+    }
+}
+
+export const addProducts = (req, res) =>{
+    try{
+        products.push(req.body);
+        return res.status(200).json(products);
+    } catch (err){
+        return res.status(500).json(`Erro ao adicionar o produto: ${err}`);
     }
 }
