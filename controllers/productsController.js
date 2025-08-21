@@ -84,3 +84,15 @@ export const updateProducts = (req, res) => {
         return res.status(500).json(`Erro ao atualizar o produto: ${err}`);
     }
 }
+
+export const deleteProducts = (req, res) =>{
+    try {
+        const index = Number(req.params.id) - 1;
+
+        products.splice(index, 1);
+
+        return res.status(200).json(products);
+    } catch (err) {
+        return res.status(500).json(`Erro ao deletar o produto: ${err}`);
+    }
+}
