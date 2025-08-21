@@ -57,9 +57,22 @@ export const getProducts = (_, res) => {
 
 export const addProducts = (req, res) =>{
     try{
-        products.push(req.body);
+        const product = req.body;
+        product.id = products.length + 1;
+        products.push(product);
         return res.status(200).json(products);
     } catch (err){
         return res.status(500).json(`Erro ao adicionar o produto: ${err}`);
+    }
+}
+
+export const updateProducts = (req, res) => {
+    try{
+        const {id, newVal} = req.body;
+        products.forEach((product) => {
+
+        })
+    } catch (err) {
+
     }
 }
