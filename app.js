@@ -11,3 +11,5 @@ app.use("/", router);
 export default app;
 
 //App separado da inicialização do servidor para otimizar testes posteriormente
+
+/*Primeiro arquivo criado, prepara o ambiente express/cors*/ 
