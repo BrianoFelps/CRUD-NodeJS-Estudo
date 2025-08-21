@@ -1,11 +1,8 @@
 import express from "express";
-// import { getProducts } from '../controllers/productsController'
+import { getProducts } from '../controllers/productsController.js'
 
 const router = express.Router();
 
-router.get("/", (_, res) => {
-    console.log("Deu certo!");
-    return res.status(200).json();
-})
+router.get("/", getProducts);
 
 export default router;
