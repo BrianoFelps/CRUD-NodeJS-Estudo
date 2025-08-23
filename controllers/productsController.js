@@ -46,7 +46,11 @@ const products = [
     }
 ];
 
-/*Estrutura basicona de um controller*/
+/*
+Estrutura basicona de um controller.
+como o routes/products.js já tratam dos endpoints,
+basta uma função com req/res
+*/
 export const getProducts = (_, res) => {
     try{
         return res.status(200).json(products);
@@ -89,6 +93,7 @@ export const deleteProducts = (req, res) =>{
     try {
         const index = Number(req.params.id) - 1;
 
+        //remove 1 elemento da array de acordo com o index
         products.splice(index, 1);
 
         return res.status(200).json(products);
