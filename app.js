@@ -18,12 +18,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use((req, res, next) => {
-    const auth = req.headers.authorization;
-    if(auth === 'verificacao token') return next();
-    res.status(401).send();
-})
-
 /*
 Chamando o Handler: Função, método, rotina especializado
 em executar uma função principal do programa, e/ou tratar dados.
