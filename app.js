@@ -25,6 +25,13 @@ Os handlers finalizam o processamento de requisição e retornam uma resposta.
 */
 app.use("/", router);
 
+//Middleware especializado em tratativa de erros
+app.use((err, req, res, next) =>{
+    console.log(err);
+    res.status(500).json({message: "Internal server Error!"})
+})
+
+
 export default app;
 
 //App separado da inicialização do servidor para otimizar testes posteriormente

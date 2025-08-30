@@ -1,3 +1,5 @@
+import ErrorNotFound from "../errors/ErrorNotFound.js";
+
 // import PrismaClient from '@prisma/client';
 
 //const prisma = new PrismaClient();
@@ -70,22 +72,24 @@ export const addProducts = (req, res) =>{
     }
 }
 
-export const updateProducts = (req, res) => {
+export const updateProducts = (req, res, next) => {
     try{
         //com params eu puxo os parametros da requisição, isso é o que se passa depois da rota por padrão
         const id = Number(req.params.id);
-        products.forEach(product => {
-            if(id === product.id){
-                product.nome = req.body.nome;
-                product.descricao = req.body.descricao,
-                product.preco = req.body.preco,
-                product.categoria= req.body.categoria
-            }
-        
-        })
+        const product = products.find(product => (id === product.id));
+
+        if(!product) throw new ErrorNotFound("Product");
+
+        product.nome = req.body.nome;
+        product.descricao = req.body.descricao,
+        product.preco = req.body.preco,
+        product.categoria= req.body.categoria;
+
         return res.status(200).json(products);
     } catch (err) {
-        return res.status(500).json(`Erro ao atualizar o produto: ${err}`);
+        if(err instanceof ErrorNotFound) return res.status(404).json({message: err.message});
+        //passa pra tratativa de erros status 500
+        next(err);
     }
 }
 
