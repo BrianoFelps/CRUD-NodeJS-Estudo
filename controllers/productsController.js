@@ -1,4 +1,5 @@
 import ErrorNotFound from "../errors/ErrorNotFound.js";
+import { addProduct, getAllProducts } from "../models/products.js";
 
 // import PrismaClient from '@prisma/client';
 
@@ -17,7 +18,8 @@ export const getProducts = async (_, res) => {
 }*/
 
 //tratamento com dados brutos, sem banco de dados
-const products = [
+
+/*const products = [
     {
     id: 1, 
     nome: "Cadeira ergonômica",
@@ -46,27 +48,29 @@ const products = [
     preco: 5099.99,
     categoria: "Computadores"
     }
-];
+];*/
 
 /*
 Estrutura basicona de um controller.
 como o routes/products.js já tratam dos endpoints,
 basta uma função com req/res
 */
-export const getProducts = (_, res) => {
+export const getProducts = async (_, res) => {
     try{
+        const products = await getAllProducts();
         return res.status(200).json(products);
     } catch (err){
         return res.status(500).json(`Erro ao obter os produtos: ${err}`);
     }
 }
 
-export const addProducts = (req, res) =>{
+/*VALIDAÇÃO DA REQ COM LIBS PODE SER IDEAL PARA PROJETOS MAIORES*/
+
+export const addProducts = async (req, res) =>{
     try{
-        const product = req.body;
-        product.id = products.length + 1;
-        products.push(product);
-        return res.status(200).json(products);
+        const {name, description, price, imagesUrl} = req.body;
+        await addProduct(name, description, price, imagesUrl);
+        return res.status(200).json();
     } catch (err){
         return res.status(500).json(`Erro ao adicionar o produto: ${err}`);
     }
