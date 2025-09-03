@@ -1,5 +1,5 @@
 import ErrorNotFound from "../errors/ErrorNotFound.js";
-import { addProduct, getAllProducts } from "../models/products.js";
+import { addProduct, deleteProduct, getAllProducts, updateProduct } from "../models/products.js";
 
 // import PrismaClient from '@prisma/client';
 
@@ -70,26 +70,21 @@ export const addProducts = async (req, res) =>{
     try{
         const {name, description, price, imagesUrl} = req.body;
         await addProduct(name, description, price, imagesUrl);
-        return res.status(200).json();
+        return res.status(200).json({status: "ok"});
     } catch (err){
         return res.status(500).json(`Erro ao adicionar o produto: ${err}`);
     }
 }
 
-export const updateProducts = (req, res, next) => {
+export const updateProducts = async(req, res, next) => {
     try{
         //com params eu puxo os parametros da requisição, isso é o que se passa depois da rota por padrão
         const id = Number(req.params.id);
-        const product = products.find(product => (id === product.id));
+        const {name, description, price, imagesUrl} = req.body;
+        
+        await updateProduct(id, name, description, price, imagesUrl)
 
-        if(!product) throw new ErrorNotFound("Product");
-
-        product.nome = req.body.nome;
-        product.descricao = req.body.descricao,
-        product.preco = req.body.preco,
-        product.categoria= req.body.categoria;
-
-        return res.status(200).json(products);
+        return res.status(200).json({status: "ok"});
     } catch (err) {
         if(err instanceof ErrorNotFound) return res.status(404).json({message: err.message});
         //passa pra tratativa de erros status 500
@@ -97,14 +92,13 @@ export const updateProducts = (req, res, next) => {
     }
 }
 
-export const deleteProducts = (req, res) =>{
+export const deleteProducts = async (req, res) =>{
     try {
-        const index = Number(req.params.id) - 1;
+        const id = Number(req.params.id);
 
-        //remove 1 elemento da array de acordo com o index
-        products.splice(index, 1);
+        await deleteProduct(id);
 
-        return res.status(200).json(products);
+        return res.status(200).json({status: "ok"});
     } catch (err) {
         return res.status(500).json(`Erro ao deletar o produto: ${err}`);
     }

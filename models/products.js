@@ -15,6 +15,7 @@ export const addProduct = (name, description, price, imagesUrl) => {
     })
 }
 
+
 /*
 No Postman:
 {
@@ -26,3 +27,21 @@ No Postman:
     ]
 }
 */
+
+export const updateProduct = (id, name, description, price, imagesUrl) =>{
+    return prisma.products.update({
+        where: {id},
+        data: {
+            name,
+            description, 
+            price, 
+            imagesUrl
+        }
+    })
+}
+
+export const deleteProduct = id =>{
+    return prisma.products.delete({
+        where: {id}
+    })
+}
