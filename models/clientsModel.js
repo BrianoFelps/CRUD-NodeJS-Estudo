@@ -1,8 +1,12 @@
 import prisma from "../database/prisma.js";
 
-export const regClient = (client) =>{
+export const regClient = (name, email, password) =>{
     return prisma.clients.create({
-        data: client
+        data: {
+            name,
+            email, 
+            password
+        }
     })
 }
 
