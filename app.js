@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import router from './routes/products.js';
+import productsRouter from './routes/products.js';
+import usersRouter from './routes/clients.js';
 
 const app = express();
 
@@ -23,7 +24,8 @@ Chamando o Handler: Função, método, rotina especializado
 em executar uma função principal do programa, e/ou tratar dados.
 Os handlers finalizam o processamento de requisição e retornam uma resposta.
 */
-app.use("/", router);
+app.use(productsRouter);
+app.use(usersRouter);
 
 //Middleware especializado em tratativa de erros
 app.use((err, req, res, next) =>{

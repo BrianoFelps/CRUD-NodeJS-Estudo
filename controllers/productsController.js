@@ -1,5 +1,5 @@
 import ErrorNotFound from "../errors/ErrorNotFound.js";
-import { addProduct, deleteProduct, getAllProducts, updateProduct } from "../models/products.js";
+import { addProduct, deleteProduct, getAllProducts, updateProduct } from "../models/productsModel.js";
 
 // import PrismaClient from '@prisma/client';
 
