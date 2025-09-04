@@ -2,7 +2,7 @@ import NotAuthorizedError from "../errors/NotAuthorizedError.js";
 import { logClient, regClient } from "../models/clientsModel.js";
 import bcrypt from "bcrypt";
 
-export const registerClient = async(req, res) => {
+export const registerClient = async(req, res, next) => {
     try{
         const {name, email, password} = req.body;
         /*Criptografia de senha. Senha e numero de caracteres do salt*/
@@ -12,7 +12,7 @@ export const registerClient = async(req, res) => {
         await regClient(name, email, password);
         res.status(201).send();
     } catch(err){   
-        return res.status(500).send({message: err.message})
+        next(err);
     }
 }
 

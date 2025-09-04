@@ -31,6 +31,7 @@ app.use(usersRouter);
 //Middleware especializado em tratativa de erros
 app.use((err, req, res, next) =>{
     console.log(err.message);
+    if(err instanceof NotFoundError) return res.status(404).json({message: err.message});
     if (err instanceof NotAuthorizedError) return res.status(401).json({message: err.message});
     res.status(500).json({message: "Internal server error!"});
 })

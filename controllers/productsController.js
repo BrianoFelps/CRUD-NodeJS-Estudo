@@ -55,24 +55,24 @@ Estrutura basicona de um controller.
 como o routes/products.js já tratam dos endpoints,
 basta uma função com req/res
 */
-export const getProducts = async (_, res) => {
+export const getProducts = async (_, res, next) => {
     try{
         const products = await getAllProducts();
         return res.status(200).json(products);
     } catch (err){
-        return res.status(500).json(`Erro ao obter os produtos: ${err}`);
+        next(err);
     }
 }
 
 /*VALIDAÇÃO DA REQ COM LIBS PODE SER IDEAL PARA PROJETOS MAIORES*/
 
-export const addProducts = async (req, res) =>{
+export const addProducts = async (req, res, next) =>{
     try{
         const {name, description, price, imagesUrl} = req.body;
         await addProduct(name, description, price, imagesUrl);
         return res.status(200).json({status: "ok"});
     } catch (err){
-        return res.status(500).json(`Erro ao adicionar o produto: ${err}`);
+        next(err);
     }
 }
 
@@ -86,13 +86,12 @@ export const updateProducts = async(req, res, next) => {
 
         return res.status(200).json({status: "ok"});
     } catch (err) {
-        if(err instanceof NotFoundError) return res.status(404).json({message: err.message});
         //passa pra tratativa de erros status 500
         next(err);
     }
 }
 
-export const deleteProducts = async (req, res) =>{
+export const deleteProducts = async (req, res, next) =>{
     try {
         const id = Number(req.params.id);
 
@@ -100,6 +99,6 @@ export const deleteProducts = async (req, res) =>{
 
         return res.status(200).json({status: "ok"});
     } catch (err) {
-        return res.status(500).json(`Erro ao deletar o produto: ${err}`);
+        next(err);
     }
 }
