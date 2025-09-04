@@ -3,6 +3,7 @@ import cors from 'cors';
 import productsRouter from './routes/products.js';
 import usersRouter from './routes/clients.js';
 import NotAuthorizedError from './errors/NotAuthorizedError.js';
+import NotFoundError from './errors/NotFoundError.js';
 
 const app = express();
 
