@@ -1,4 +1,4 @@
-import ErrorNotFound from "../errors/ErrorNotFound.js";
+import NotFoundError from "../errors/NotFoundError.js";
 import { addProduct, deleteProduct, getAllProducts, updateProduct } from "../models/productsModel.js";
 
 // import PrismaClient from '@prisma/client';
@@ -86,7 +86,7 @@ export const updateProducts = async(req, res, next) => {
 
         return res.status(200).json({status: "ok"});
     } catch (err) {
-        if(err instanceof ErrorNotFound) return res.status(404).json({message: err.message});
+        if(err instanceof NotFoundError) return res.status(404).json({message: err.message});
         //passa pra tratativa de erros status 500
         next(err);
     }

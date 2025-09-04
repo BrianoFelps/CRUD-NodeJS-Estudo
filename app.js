@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import productsRouter from './routes/products.js';
 import usersRouter from './routes/clients.js';
+import NotAuthorizedError from './errors/NotAuthorizedError.js';
 
 const app = express();
 
@@ -29,8 +30,9 @@ app.use(usersRouter);
 
 //Middleware especializado em tratativa de erros
 app.use((err, req, res, next) =>{
-    console.log(err);
-    res.status(500).json({message: "Internal server Error!"})
+    console.log(err.message);
+    if (err instanceof NotAuthorizedError) return res.status(401).json({message: err.message});
+    res.status(500).json({message: "Internal server error!"});
 })
 
 

@@ -10,6 +10,8 @@ export const regClient = (name, email, password) =>{
     })
 }
 
-// export const logClient = (email, password) =>{
-
-// }
+export const logClient = (email) =>{
+    return prisma.clients.findFirst({
+        where: {email}
+    })
+}

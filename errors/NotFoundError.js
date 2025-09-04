@@ -1,7 +1,7 @@
-class ErrorNotFound extends Error{
+class NotFoundError extends Error{
     constructor(entity){
         super(`${entity} not found!`);
     }
 }
 
-export default ErrorNotFound;
+export default NotFoundError;

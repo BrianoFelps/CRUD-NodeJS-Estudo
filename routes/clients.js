@@ -1,5 +1,5 @@
 import express from "express";
-import { registerClient } from "../controllers/clientsController.js";
+import { loginClient, registerClient } from "../controllers/clientsController.js";
 
 // import { clientsAuth } from "../middlewares/clientsAuth.js";
 
@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/reg", registerClient);
 
 /* Log-in */
-// router.post("/log", (req, res) => res.send("log") );
+router.post("/log", loginClient);
 
 /*...*/
 // router.get("/", );
