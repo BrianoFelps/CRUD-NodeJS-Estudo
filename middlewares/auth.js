@@ -7,7 +7,8 @@ const auth = (req, res, next) => {
         verifica se o token é valido, passa pra próxima função*/
         const auth = req.headers.authorization;
         const token = auth.split(" ")[1];
-        jwt.verify(token, process.env.SECRET);
+
+        jwt.verify(token, process.env.JWT_SECRET);
         next();
     } catch (err) {
         next(new NotAuthorizedError());

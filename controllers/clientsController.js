@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
 import NotAuthorizedError from "../errors/NotAuthorizedError.js";
 import { logClient, regClient } from "../models/clientsModel.js";
 import bcrypt from "bcrypt";
+import { generateAcessToken } from "../Utils/jwt.js";
 
 export const registerClient = async(req, res, next) => {
     try{
@@ -32,15 +32,16 @@ export const loginClient = async(req, res, next) =>{
         if(!isValid) throw new NotAuthorizedError();
 
         const payload = {
-            id: user.id,
-            name: user.name
+            "iss": "http://localhost:8080",
+            "sub": user.id
         }
 
-        const token = jwt.sign(payload, process.env.SECRET);
+        /*Função criada para simplificar*/
+        const acessToken = generateAcessToken(payload);
+        // const refreshToken = generateAcessToken(payload);
 
-        res.send({
-            token
-        })
+        // res.json({ acessToken, refreshToken })
+        res.json({ acessToken })
     } catch(err){
         /*Passa para a tratativa de erro do app.js, essa sintaxe de next é limpa */
         next(err);
