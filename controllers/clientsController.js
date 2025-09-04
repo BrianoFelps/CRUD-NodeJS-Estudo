@@ -26,7 +26,7 @@ export const loginClient = async(req, res, next) =>{
         if(!user) throw new NotAuthorizedError();
 
         /*Confirma se o hash da senha digitada equivale ao hash da senha do BD, retorna bool*/
-        const isValid = bcrypt.compareSync(password, user.password);
+        const isValid = await bcrypt.compare(password, user.password);
 
         if(!isValid) throw new NotAuthorizedError();
 
