@@ -28,6 +28,7 @@ model clients {
   email     String? @unique
   password  String
   boughtByUser boughtByUser[]
+  tokens tokens[]
 }
 
 //Tabela de junção muitos-muitos
@@ -38,6 +39,13 @@ model boughtByUser{
 
   clientId Int
   productId Int
+}
+
+model tokens {
+  id Int @id @default(autoincrement())
+  token String
+  client clients @relation(fields: [clientId], references: [id])
+  clientId Int
 }
 
 /*

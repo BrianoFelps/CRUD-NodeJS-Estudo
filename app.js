@@ -1,9 +1,12 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import productsRouter from './routes/products.js';
 import usersRouter from './routes/clients.js';
+import tokensRouter from './routes/tokens.js';
 import NotAuthorizedError from './errors/NotAuthorizedError.js';
 import NotFoundError from './errors/NotFoundError.js';
+import InvalidRefreshToken from './errors/InvalidRefreshToken.js';
 
 const app = express();
 
@@ -15,6 +18,7 @@ Antes de chegar a um handler.
 */
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
     console.log("Horário: " + new Date().toISOString());
@@ -28,11 +32,13 @@ Os handlers finalizam o processamento de requisição e retornam uma resposta.
 */
 app.use(productsRouter);
 app.use(usersRouter);
+app.use(tokensRouter);
 
 //Middleware especializado em tratativa de erros
 app.use((err, req, res, next) =>{
     console.log(err.message);
     if(err instanceof NotFoundError) return res.status(404).json({message: err.message});
+    if(err instanceof InvalidRefreshToken) return res.status(403).json({message: err.message});
     if (err instanceof NotAuthorizedError) return res.status(401).json({message: err.message});
     res.status(500).json({message: "Internal server error!"});
 })
